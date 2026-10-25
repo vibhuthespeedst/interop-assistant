@@ -1,0 +1,100 @@
+/* Interop Mapper design tokens.
+   Every color, typeface, size, space, radius and timing the app uses is named here, and style.css
+   only uses these names. To change the look, change this file; DESIGN.md explains each token.
+
+   Colors are OKLCH: oklch(lightness chroma hue). Each color is built from one of the hues below, so
+   changing a hue re-tints everything made from it. light-dark(A, B) gives the light-theme value A
+   and the dark-theme value B; the theme follows the system unless the reader picks one. */
+
+:root {
+  color-scheme: light dark;
+
+  /* ---------- hues: the five inks of the atlas ---------- */
+  --hue-ink: 256;          /* navy: text, rules, headwords */
+  --hue-paper: 82;         /* the page: a warm, slightly aged white */
+  --hue-marker: 96;        /* highlighter yellow: read-first fields, where you are */
+  --hue-artery: 27;        /* red: references a record makes (arteries leave the heart) */
+  --hue-vein: 258;         /* blue: references a record receives (veins return) */
+  --paper-chroma: 0.014;   /* how warm the paper is: 0 is grey, 0.03 is an old book */
+
+  /* ---------- surfaces ---------- */
+  --paper:  light-dark(oklch(97.4% var(--paper-chroma) var(--hue-paper)), oklch(18.5% 0.03 var(--hue-ink)));
+  --sheet:  light-dark(oklch(99.3% calc(var(--paper-chroma) / 2) var(--hue-paper)), oklch(21.5% 0.034 var(--hue-ink)));
+  --tint:   light-dark(oklch(94.4% calc(var(--paper-chroma) * 1.4) var(--hue-paper)), oklch(25% 0.04 var(--hue-ink)));
+  --tint-2: light-dark(oklch(91% calc(var(--paper-chroma) * 1.8) var(--hue-paper)), oklch(29.5% 0.045 var(--hue-ink)));
+  --rule:   light-dark(oklch(85.5% 0.02 var(--hue-ink)), oklch(33.5% 0.04 var(--hue-ink)));
+
+  /* ---------- ink ---------- */
+  --ink:    light-dark(oklch(27% 0.075 var(--hue-ink)), oklch(94.5% 0.012 var(--hue-ink)));
+  --ink-2:  light-dark(oklch(41% 0.05 var(--hue-ink)), oklch(83% 0.024 var(--hue-ink)));
+  --ink-3:  light-dark(oklch(51% 0.035 var(--hue-ink)), oklch(71% 0.03 var(--hue-ink)));
+  --on-ink: var(--paper);  /* text set on solid ink */
+
+  /* ---------- colors that mean something ---------- */
+  --marker:      light-dark(oklch(90% 0.15 var(--hue-marker)), oklch(48% 0.1 var(--hue-marker)));
+  --marker-soft: light-dark(oklch(95.6% 0.06 var(--hue-marker)), oklch(30% 0.055 var(--hue-marker)));
+  --artery:      light-dark(oklch(50% 0.175 var(--hue-artery)), oklch(74% 0.14 var(--hue-artery)));
+  --vein:        light-dark(oklch(47% 0.16 var(--hue-vein)), oklch(77% 0.11 var(--hue-vein)));
+  --add:         light-dark(oklch(47% 0.12 152), oklch(80% 0.13 152));   /* Compare: added */
+  --chg:         light-dark(oklch(52% 0.11 70), oklch(82% 0.12 80));     /* Compare: changed */
+  --del:         var(--artery);                                          /* Compare: removed */
+  --shadow-color: light-dark(oklch(27% 0.075 var(--hue-ink) / 0.45), oklch(5% 0.02 var(--hue-ink) / 0.8));
+
+  /* ---------- type ---------- */
+  --font-display: "Literata", Georgia, "Times New Roman", serif;           /* headwords, titles, definitions */
+  --font-text: "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", sans-serif;  /* interface */
+  --font-code: "Atkinson Hyperlegible Mono", ui-monospace, "Cascadia Mono", Consolas, monospace; /* paths, JSON */
+
+  --text-xs: 12.5px;
+  --text-s: 13.5px;
+  --text-m: 15.5px;                          /* body */
+  --text-l: 17px;
+  --text-xl: 20px;
+  --text-lead: clamp(19px, 2.1vw, 23px);     /* the first sentence of an entry */
+  --text-h3: clamp(25px, 2.7vw, 34px);       /* section titles */
+  --text-h2: clamp(38px, 5.4vw, 64px);       /* page titles */
+  --text-hero: clamp(44px, 6.6vw, 100px);    /* the question on the home page */
+  --text-display: clamp(54px, 10vw, 136px);  /* headwords on resource pages */
+  --leading-tight: 0.98;
+  --leading-text: 1.55;
+  --leading-serif: 1.62;                     /* serif reading text gets a little more room */
+  --tracking-display: -0.032em;
+  --measure: 68ch;                           /* longest comfortable line */
+  --syllable-mark: "\00B7";                  /* the dot in Medication·Request; "" turns it off */
+
+  /* ---------- space: a 4px grid ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* ---------- shape ---------- */
+  --radius-s: 4px;
+  --radius-m: 8px;
+  --radius-l: 14px;
+  --radius-pill: 999px;
+  --stroke: 1px;
+  --stroke-strong: 2px;
+
+  /* ---------- layout ---------- */
+  --max: 1320px;
+  --gutter: clamp(16px, 3.6vw, 44px);
+  --drawer-w: 460px;
+  --rail-w: 40px;                            /* the thumb index on wide screens */
+  --header-h: 64px;                          /* measured and updated by app.js */
+
+  /* ---------- motion ---------- */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur-quick: 140ms;
+  --dur-draw: 700ms;                         /* leader lines on the anatomy plate */
+  --stagger: 45ms;
+}
+
+/* The reader's choice from the theme button wins over the system setting. */
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }

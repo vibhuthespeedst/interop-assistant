@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'none'">
+  <title>Interop Mapper</title>
+  <meta name="description" content="Offline FHIR dictionary: find where your data goes, see what every resource is for, compare R4, R4B and R5, and find official extensions.">
+  <meta name="theme-color" content="#f8f6f0" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b1424" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="top" id="top">
+    <div class="top-inner">
+      <a class="brand" href="#find" id="brand">
+        <img src="icons/icon-192.png" alt="" width="34" height="34">
+        <span class="brand-text">
+          <span class="brand-name">Interop Mapper</span>
+          <span class="brand-tag">Offline FHIR dictionary</span>
+        </span>
+      </a>
+      <nav class="tabs" aria-label="Sections">
+        <a href="#find" data-tab="find">Look up</a>
+        <a href="#compare" data-tab="compare">Compare versions</a>
+        <a href="#extensions" data-tab="extensions">Extensions</a>
+      </nav>
+      <div class="top-controls">
+        <div class="segmented" role="radiogroup" aria-label="FHIR version" id="version"></div>
+        <span class="status" id="status" role="status" aria-live="polite">Loading…</span>
+        <button class="btn quiet theme" id="theme" type="button">Auto</button>
+        <button class="btn" id="install" hidden>Install app</button>
+      </div>
+    </div>
+  </header>
+
+  <datalist id="cmp-names"></datalist>
+
+  <div class="layout">
+    <main id="main">
+      <section id="tab-find" class="tab">
+        <div class="hero">
+          <div class="hero-main">
+            <label id="find-label" class="hero-label" for="find-q">Where does this data go in FHIR?</label>
+            <div class="search">
+              <input id="find-q" class="hero-input" type="search" autocomplete="off" spellcheck="false"
+                     placeholder="date of birth, lab normal range, Encounter.class">
+              <kbd class="kbd" aria-hidden="true" title="Press / to search">/</kbd>
+            </div>
+            <div id="find-try"></div>
+          </div>
+          <aside id="eotd" class="eotd" aria-label="Entry of the day"></aside>
+        </div>
+        <div id="find-out" class="out"></div>
+      </section>
+
+      <section id="tab-story" class="tab" aria-label="Resource" hidden>
+        <div class="entry-bar">
+          <nav class="crumbs" aria-label="Breadcrumb">
+            <a href="#find">Look up</a><span aria-hidden="true"> / </span><span id="crumb-name"></span>
+          </nav>
+          <input id="story-name" class="jump" type="search" list="cmp-names" autocomplete="off" spellcheck="false"
+                 placeholder="Open another resource" aria-label="Open a resource or datatype">
+        </div>
+        <div id="story-out" class="out"></div>
+      </section>
+
+      <section id="tab-compare" class="tab" aria-labelledby="compare-title" hidden>
+        <div class="page-head">
+          <h2 class="page-title" id="compare-title">Compare versions</h2>
+          <p class="page-note">Every difference in a resource between two FHIR versions, computed element by element from the official definitions.</p>
+        </div>
+        <div class="tool">
+          <label class="field grow">Resource or datatype
+            <input id="cmp-name" type="search" list="cmp-names" autocomplete="off" spellcheck="false" placeholder="Encounter">
+          </label>
+          <label class="field">From <select id="cmp-from"></select></label>
+          <label class="field">To <select id="cmp-to"></select></label>
+        </div>
+        <div id="compare-out" class="out"></div>
+      </section>
+
+      <section id="tab-extensions" class="tab" aria-labelledby="ext-title" hidden>
+        <div class="page-head">
+          <h2 class="page-title" id="ext-title">Extensions</h2>
+          <p class="page-note">Official HL7 extensions, for data that has no element in the core resources.</p>
+        </div>
+        <div class="tool">
+          <label class="field grow">What do you need to store?
+            <input id="ext-q" type="search" autocomplete="off" spellcheck="false" placeholder="birth place, preferred pharmacy">
+          </label>
+          <label class="field">Used on (optional)
+            <input id="ext-on" type="search" autocomplete="off" spellcheck="false" placeholder="Patient">
+          </label>
+        </div>
+        <div id="ext-out" class="out"></div>
+      </section>
+    </main>
+
+    <aside id="detail" class="detail" aria-label="Field details" hidden>
+      <div class="detail-bar"><button class="btn small" id="detail-close">Close</button></div>
+      <div id="detail-body"></div>
+    </aside>
+  </div>
+
+  <footer class="foot">
+    <div class="foot-inner">
+      <p class="foot-mark">Interop Mapper</p>
+      <div class="colophon">
+        <p>Definitions from HL7 FHIR R4 4.0.1, R4B 4.3.0 and R5 5.0.0, and the HL7 Extensions Pack 5.3.0. Saved on this device after the first visit, so it works offline. Built by InteropSec.</p>
+        <p>Set in Literata and Atkinson Hyperlegible, under the <a href="fonts/OFL.txt">SIL Open Font License</a>.</p>
+        <p>HL7® and FHIR® are registered trademarks of Health Level Seven International. Not affiliated with or endorsed by HL7.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
